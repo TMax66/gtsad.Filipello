@@ -28,7 +28,8 @@ ST <- dt %>% mutate(st = paste0("ST",st)) %>%
   pivot_wider(names_from = "origin", values_from = "n", values_fill = 0) %>%  # %>% ungroup() %>% gt()
   # column_to_rownames("st") %>% 
   adorn_totals(where = "row") %>% 
-  adorn_totals(where = "col") %>%
+  adorn_totals(where = "col") %>%  
+write.xlsx(file = "ST table.xlsx")
   gt()
 
 #gt(rowname_col = "st")
@@ -69,8 +70,14 @@ Syt <- dt %>%
   filter(!is.na(serotype)) %>% 
   group_by(serotype, source) %>% 
   summarise(n = n()) %>%  
-  pivot_wider(names_from = "source", values_from = "n", values_fill = 0) %>% 
-  column_to_rownames("serotype")
+  pivot_wider(names_from = "source", values_from = "n", values_fill = 0) %>%  
+  # adorn_totals(where = "row") %>%  <- usa questi codici per 
+  # adorn_totals(where = "col") %>%  
+  # write.xlsx(file = "Sty table.xlsx")
+
+
+
+column_to_rownames("serotype") %>%  
 
 res.ca <- CA(Syt, graph = FALSE)
 fviz_ca_biplot(res.ca, 
