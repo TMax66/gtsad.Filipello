@@ -18,7 +18,7 @@ dt <- dt %>%
 
 
 # association ST----
-ST <- dt %>% mutate(st = paste0("ST",st)) %>% 
+dt %>% mutate(st = paste0("ST",st)) %>% 
   filter(st %in% c("ST9", "ST121", "ST8", "ST224",
                    "ST325", "ST1", "ST155", "ST5", "ST3", "ST2")) %>% #, 
          #!origin %in% c("environmental", "clinical")) %>%
@@ -26,9 +26,9 @@ ST <- dt %>% mutate(st = paste0("ST",st)) %>%
   group_by(st, origin) %>% 
   summarise(n = n()) %>%  
   pivot_wider(names_from = "origin", values_from = "n", values_fill = 0) %>%  # %>% ungroup() %>% gt()
-  column_to_rownames("st") #%>% 
-  # adorn_totals(where = "row") %>% 
-  # adorn_totals(where = "col") #%>%  
+  column_to_rownames("st") %>% 
+  adorn_totals(where = "row") %>% 
+  adorn_totals(where = "col") %>%  
 write.xlsx(file = "ST table.xlsx")
  # gt()
 
@@ -71,9 +71,9 @@ Syt <- dt %>%
   group_by(serotype, source) %>% 
   summarise(n = n()) %>%  
   pivot_wider(names_from = "source", values_from = "n", values_fill = 0) %>%  
-  # adorn_totals(where = "row") %>%  <- usa questi codici per 
-  # adorn_totals(where = "col") %>%  
-  # write.xlsx(file = "Sty table.xlsx")
+  adorn_totals(where = "row") %>%   
+  adorn_totals(where = "col") %>%  
+  write.xlsx(file = "Sty table.xlsx")
 column_to_rownames("serotype")
 
 
